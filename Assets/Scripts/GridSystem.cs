@@ -27,4 +27,9 @@ public class GridSystem
     {
         return new Vector3(x, 0, z) * cellSize;
     }
+
+    public GetGridPosition()
+    {
+        
+    }
 }
