@@ -13,6 +13,6 @@ public struct GridPosition
 
     public override string ToString()
     {
-        return "x - " + x + "Z - " + z;
+        return "x: " + x + ";Z: " + z;
     }
 }
