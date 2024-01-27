@@ -3,17 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class ActionButtonUI : MonoBehaviour
 {
     [SerializeField]private TextMeshProUGUI textMeshPro;
     [SerializeField]private Button button;
+    [SerializeField]private GameObject selectedGameObject;
+
+    private BaseAction baseAction;
 
     public void SetBaseAction(BaseAction baseAction)
     {
+        this.baseAction = baseAction;
         textMeshPro.text = baseAction.GetActionName();
         button.onClick.AddListener(() => {
             UnitActionSystem.Instance.SetSelectedAction(baseAction);
         });
+    }
+
+    public void UpdateSelectedVisual()
+    {
+        BaseAction selectedBaseAction = UnitActionSystem.Instance.GetSelectedAction();
+        selectedGameObject.SetActive(selectedBaseAction == baseAction);
     }
 }
