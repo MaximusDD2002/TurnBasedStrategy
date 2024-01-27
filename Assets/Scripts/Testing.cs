@@ -11,7 +11,7 @@ public class Testing : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             unit.GetMoveAction().GetValidActionGridPositionList();
         }
