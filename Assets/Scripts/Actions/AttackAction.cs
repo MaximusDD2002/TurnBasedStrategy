@@ -16,6 +16,8 @@ public class AttackAction : BaseAction
     private State state;
     private int MaxAttackDistance = 1;
     private float stateTimer;
+    private Unit targetUnit;
+    private bool canSlash;
 
     private void Update()
     {
@@ -29,8 +31,17 @@ public class AttackAction : BaseAction
         switch (state)
         {
             case State.Aiming:
+                Vector3 aimDir = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
+                
+                float rotateSpeed = 10f;
+                transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * rotateSpeed);
                 break;
             case State.Attacking:
+                if (canSlash)
+                {
+                    Slash();
+                    canSlash = false;
+                }
                 break;
             case State.Resting:
                 break;
@@ -63,8 +74,11 @@ public class AttackAction : BaseAction
                 onActionComplete();
                 break;
         }
+    }
 
-        Debug.Log(state);
+    private void Slash()
+    {
+        targetUnit.Damage();
     }
 
     public override string GetActionName()
@@ -117,10 +131,12 @@ public class AttackAction : BaseAction
         this.onActionComplete = onActionComplete;
         isActive = true;
 
-        Debug.Log("Aiming");
+        targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
         state = State.Aiming;
         float aimingStateTime = 1f;
         stateTimer = aimingStateTime;
+
+        canSlash = true;
     }
 }
