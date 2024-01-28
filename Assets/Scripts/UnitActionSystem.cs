@@ -37,6 +37,11 @@ public class UnitActionSystem : MonoBehaviour
             return;
         }
 
+        if (!TurnSystem.Instance.IsPlayerTurn())
+        {
+            return;
+        }
+
         if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
@@ -88,6 +93,10 @@ public class UnitActionSystem : MonoBehaviour
                     if (unit == selectedUnit)
                     {
                         // This unit can't be selected twice in a row
+                        return false;
+                    }
+                    if(unit.IsEnemy())
+                    {
                         return false;
                     }
                     SetSelectedUnit(unit);
