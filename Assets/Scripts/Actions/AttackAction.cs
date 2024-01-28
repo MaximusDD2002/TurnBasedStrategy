@@ -32,7 +32,7 @@ public class AttackAction : BaseAction
         {
             case State.Aiming:
                 Vector3 aimDir = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
-                
+
                 float rotateSpeed = 10f;
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * rotateSpeed);
                 break;
@@ -70,8 +70,7 @@ public class AttackAction : BaseAction
                 stateTimer = attackingStateTime;
                 break;
             case State.Resting:
-                isActive = false;
-                onActionComplete();
+                ActionComplete();
                 break;
         }
     }
@@ -128,8 +127,7 @@ public class AttackAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+        ActionStart(onActionComplete);
 
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
