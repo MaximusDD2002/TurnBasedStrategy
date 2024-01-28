@@ -21,15 +21,22 @@ public class TurnSystemUI : MonoBehaviour
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
 
         UpdateTurnText();
+        UpdateEndTurnButtonVisibility();
     }
 
     private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
     {
         UpdateTurnText();
+        UpdateEndTurnButtonVisibility();
     }
 
     private void UpdateTurnText()
     {
         turnNumberText.text = "Turn " + TurnSystem.Instance.GetTurnNumber();
+    }
+
+    private void UpdateEndTurnButtonVisibility()
+    {
+        endTurnBtn.gameObject.SetActive(TurnSystem.Instance.IsPlayerTurn());
     }
 }
