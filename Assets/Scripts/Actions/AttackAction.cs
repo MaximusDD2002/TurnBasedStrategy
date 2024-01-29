@@ -80,7 +80,7 @@ public class AttackAction : BaseAction
     private void Slash()
     {
         OnSlash?.Invoke(this, EventArgs.Empty);
-        targetUnit.Damage();
+        targetUnit.Damage(35);
     }
 
     public override string GetActionName()
