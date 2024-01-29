@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class AttackAction : BaseAction
 {
+
+    public EventHandler OnSlash;
     private enum State
     {
         Aiming,
@@ -77,6 +79,7 @@ public class AttackAction : BaseAction
 
     private void Slash()
     {
+        OnSlash?.Invoke(this, EventArgs.Empty);
         targetUnit.Damage();
     }
 
