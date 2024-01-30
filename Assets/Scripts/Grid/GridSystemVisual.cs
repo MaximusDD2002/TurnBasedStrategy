@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -33,10 +34,9 @@ public class GridSystemVisual : MonoBehaviour
                 gridSystemVisualSingleArray[x,z] = gridSystemVisualTransform.GetComponent<GridSystemVisualSingle>();
             }
         }
-    }
 
-    private void Update()
-    {
+        UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
+        LevelGrid.Instance.OnAnyUnitMovedGridPosition += LevelGrid_OnAnyUnitMovedGridPosition;
         UpdateGridVisual();
     }
 
@@ -65,5 +65,14 @@ public class GridSystemVisual : MonoBehaviour
 
         BaseAction selectedAction = UnitActionSystem.Instance.GetSelectedAction();
         ShowGridPositionList(selectedAction.GetValidActionGridPositionList());
+    }
+
+    private void UnitActionSystem_OnSelectedActionChanged(object sender, EventArgs e)
+    {
+        UpdateGridVisual();
+    }
+    private void LevelGrid_OnAnyUnitMovedGridPosition(object sender, EventArgs e)
+    {
+        UpdateGridVisual();
     }
 }
