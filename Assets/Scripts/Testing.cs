@@ -8,7 +8,7 @@ public class Testing : MonoBehaviour
     void Start()
     {
     }
-
+/*
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.V))
@@ -18,4 +18,5 @@ public class Testing : MonoBehaviour
             unit.GetMoveAction().GetValidActionGridPositionList();
         }
     }
+    */
 }

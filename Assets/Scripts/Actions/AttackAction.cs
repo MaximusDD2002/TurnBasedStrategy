@@ -16,7 +16,7 @@ public class AttackAction : BaseAction
     }
 
     private State state;
-    private int MaxAttackDistance = 1;
+    private int maxAttackDistance = 1;
     private float stateTimer;
     private Unit targetUnit;
     private bool canSlash;
@@ -87,6 +87,11 @@ public class AttackAction : BaseAction
     {
         return "Attack";
     }
+    
+    public int GetMaxAttackDistance()
+    {
+        return maxAttackDistance;
+    }
 
     public override List<GridPosition> GetValidActionGridPositionList()
     {
@@ -94,9 +99,9 @@ public class AttackAction : BaseAction
 
         GridPosition unitGridPosition = unit.GetGridPosition();
 
-        for (int x = -MaxAttackDistance; x <= MaxAttackDistance; x++)
+        for (int x = -maxAttackDistance; x <= maxAttackDistance; x++)
         {
-            for (int z = -MaxAttackDistance; z <= MaxAttackDistance; z++)
+            for (int z = -maxAttackDistance; z <= maxAttackDistance; z++)
             {
                 GridPosition offsetGridPosition = new GridPosition (x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
