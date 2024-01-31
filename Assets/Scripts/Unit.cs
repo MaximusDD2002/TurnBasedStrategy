@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour
     private HealthSystem healthSystem;
     private GridPosition gridPosition;
     private MoveAction moveAction;
+    private AttackAction attackAction;
     private BaseAction[] baseActionArray;
     private int actionPoints = ACTION_POINTS_MAX;
 
@@ -22,6 +23,7 @@ public class Unit : MonoBehaviour
     {
         healthSystem = GetComponent<HealthSystem>();
         moveAction = GetComponent<MoveAction>();
+        attackAction = GetComponent<AttackAction>();
         baseActionArray = GetComponents<BaseAction>();
     }
     private void Start()
@@ -49,7 +51,10 @@ public class Unit : MonoBehaviour
     {
         return moveAction;
     }
-
+    public AttackAction GetAttackAction()
+    {
+        return attackAction;
+    }
     public GridPosition GetGridPosition()
     {
         return gridPosition;
@@ -120,5 +125,10 @@ public class Unit : MonoBehaviour
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
         Destroy(gameObject);
         OnAnyUnitDead?.Invoke(this, EventArgs.Empty);
+    }
+
+    public float GetHealthNormalized()
+    {
+        return healthSystem.GetHealthNormalized();
     }
 }
