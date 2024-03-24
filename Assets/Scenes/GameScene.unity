@@ -923,7 +923,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3006394, y: -0.000000016410377, z: 0.000000005172915, w: 0.9537379}
+  m_LocalRotation: {x: 0.3006394, y: 0.000000016410377, z: -0.000000005172915, w: 0.9537379}
   m_LocalPosition: {x: 0, y: 7, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1652,6 +1652,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endTurnBtn: {fileID: 1669022951}
   turnNumberText: {fileID: 1018555032}
+--- !u!1 &980801945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980801947}
+  - component: {fileID: 980801946}
+  m_Layer: 0
+  m_Name: UnitManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &980801946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980801945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4845abdade386f43bf789609b8b0308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &980801947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980801945}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1018555030
 GameObject:
   m_ObjectHideFlags: 0
@@ -2200,7 +2244,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1345219804}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3006394, y: -0.000000016410377, z: 0.000000005172915, w: 0.9537379}
+  m_LocalRotation: {x: 0.3006394, y: 0.000000016410377, z: -0.000000005172915, w: 0.9537379}
   m_LocalPosition: {x: 0, y: 7, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2522,6 +2566,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSystemVisualSinglePrefab: {fileID: 7589529570770441525, guid: 82c98e8ba1a2b2348863cefd7c9d1e19,
     type: 3}
+  gridVisualTypeMaterialList:
+  - gridVisualType: 0
+    material: {fileID: 2100000, guid: eb6b2028cbb70194d9a7122637d5a29d, type: 2}
+  - gridVisualType: 1
+    material: {fileID: 2100000, guid: 218d8a85cbda942428785da8a20c53eb, type: 2}
+  - gridVisualType: 2
+    material: {fileID: 2100000, guid: c8c9acd2d0fe5bd4fbfec782fe9ae156, type: 2}
+  - gridVisualType: 3
+    material: {fileID: 2100000, guid: 2c1dda4ec37b49f4f9d183b977157cc5, type: 2}
 --- !u!4 &1594690583
 Transform:
   m_ObjectHideFlags: 0
@@ -3367,3 +3420,4 @@ SceneRoots:
   - {fileID: 1782997362}
   - {fileID: 1299769300}
   - {fileID: 1235478121}
+  - {fileID: 980801947}
