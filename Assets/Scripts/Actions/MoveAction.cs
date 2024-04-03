@@ -1,52 +1,48 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MoveAction : BaseAction
 {
     public event EventHandler OnStartMoving;
     public event EventHandler OnStopMoving;
     [SerializeField] private int maxMoveDistance = 4;
+    private NavMeshAgent navMeshAgent;
     private Vector3 targetPosition;
 
     protected override void Awake()
     {
         base.Awake();
         targetPosition = transform.position;
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
+
     private void Update()
     {
         if (!isActive)
-        {
             return;
-        }
 
+        float stoppingDistance = navMeshAgent.stoppingDistance;
 
-        float stoppingDistance = .1f;
-        
-        Vector3 moveDirection = (targetPosition - transform.position).normalized;
-
-        if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
+        if (navMeshAgent.remainingDistance > stoppingDistance)
         {
-            float moveSpeed = 4f;
-            transform.position += moveDirection * moveSpeed * Time.deltaTime;
-        }else
+            OnStartMoving?.Invoke(this, EventArgs.Empty);
+        }
+        else
         {
             OnStopMoving?.Invoke(this, EventArgs.Empty);
             ActionComplete();
         }
-        float rotateSpeed = 10f;
-        transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
     }
+
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         ActionStart(onActionComplete);
-        
-        this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
-
-        OnStartMoving?.Invoke(this, EventArgs.Empty);
+        targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        navMeshAgent.SetDestination(targetPosition);
     }
+
     public override List<GridPosition> GetValidActionGridPositionList()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
@@ -57,25 +53,17 @@ public class MoveAction : BaseAction
         {
             for (int z = -maxMoveDistance; z <= maxMoveDistance; z++)
             {
-                GridPosition offsetGridPosition = new GridPosition (x, z);
+                GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
-                {
                     continue;
-                }
 
                 if (unitGridPosition == testGridPosition)
-                {
-                    // Made it so it won't show the position on which the unit is already on
                     continue;
-                }
 
                 if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
-                {
-                    // Made it so it won't show the position on which there's another unit on
                     continue;
-                }
 
                 validGridPositionList.Add(testGridPosition);
             }
@@ -89,7 +77,6 @@ public class MoveAction : BaseAction
         return "Move";
     }
 
-    
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
         int targetCountAtPosition = unit.GetAction<AttackAction>().GetTargetCountAtPosition(gridPosition);
