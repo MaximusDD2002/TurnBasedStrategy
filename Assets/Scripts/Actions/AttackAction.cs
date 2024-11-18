@@ -15,6 +15,8 @@ public class AttackAction : BaseAction
         Resting
     }
 
+    [SerializeField] private LayerMask obstaclesLayerMask;
+    
     private State state;
     private int maxAttackDistance = 1;
     private float stateTimer;
@@ -127,6 +129,21 @@ public class AttackAction : BaseAction
                     continue;
                 }
 
+                Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
+                Vector3 shootDir = (targetUnit.GetWorldPosition() - unitWorldPosition).normalized;
+
+                float unitShoulderHeight = 1.7f;
+                if (Physics.Raycast(
+                        unitWorldPosition + Vector3.up * unitShoulderHeight,
+                        shootDir,
+                        Vector3.Distance(unitWorldPosition,
+                        targetUnit.GetWorldPosition()),
+                        obstaclesLayerMask))
+                {
+                    //Obstacle in-between
+                    continue;
+                }
+                
 
 
                 validGridPositionList.Add(testGridPosition);
@@ -151,12 +168,15 @@ public class AttackAction : BaseAction
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
+        Unit thisUnit = this.unit;
         Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
+        int actionPoints = thisUnit.GetActionPoints();
         
         return new EnemyAIAction
         {
             gridPosition = gridPosition,
-            actionValue = 100 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f)
+            actionValue = Mathf.RoundToInt(Mathf.RoundToInt(thisUnit.GetHealthNormalized() * 20f) +
+                            Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 10)) * actionPoints
         };
     }
 

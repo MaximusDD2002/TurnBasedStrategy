@@ -8,6 +8,7 @@ public class TurnSystem : MonoBehaviour
     public static TurnSystem Instance { get; private set; }
     public event EventHandler OnTurnChanged; 
     private bool isPlayerTurn = true;
+    private UnitActionSystem unitActionSystem;
     
     private int turnNumber = 1;
     private void Awake()

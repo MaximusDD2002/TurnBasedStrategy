@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class MoveAction : BaseAction
 {
@@ -38,9 +40,10 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        ActionStart(onActionComplete);
         targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         navMeshAgent.SetDestination(targetPosition);
+        OnStartMoving?.Invoke(this, EventArgs.Empty);
+        ActionStart(onActionComplete);
     }
 
     public override List<GridPosition> GetValidActionGridPositionList()
@@ -65,6 +68,16 @@ public class MoveAction : BaseAction
                 if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
                     continue;
 
+                if (!Pathfinding.Instance.IsWalkableGridPosition(testGridPosition))
+                    continue;
+                    
+                if (!Pathfinding.Instance.HasPath(unitGridPosition, testGridPosition))
+                    continue;
+                int pathdingDistanceMultiplier = 10;
+                if (Pathfinding.Instance.GetPathLength(unitGridPosition, testGridPosition) >
+                                                        maxMoveDistance * pathdingDistanceMultiplier)
+                    continue;
+
                 validGridPositionList.Add(testGridPosition);
             }
         }
@@ -80,10 +93,11 @@ public class MoveAction : BaseAction
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
         int targetCountAtPosition = unit.GetAction<AttackAction>().GetTargetCountAtPosition(gridPosition);
+        
         return new EnemyAIAction
         {
             gridPosition = gridPosition,
-            actionValue = targetCountAtPosition * 10
+            actionValue = targetCountAtPosition != 0 ? targetCountAtPosition * 10 : Random.Range(0, 10),
         };
     }
 }

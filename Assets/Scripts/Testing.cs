@@ -8,15 +8,12 @@ public class Testing : MonoBehaviour
     void Start()
     {
     }
-/*
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.T))
         {
-            GridSystemVisual.Instance.HideAllGridPosition();
-            GridSystemVisual.Instance.ShowGridPositionList(unit.GetMoveAction().GetValidActionGridPositionList());
-            unit.GetMoveAction().GetValidActionGridPositionList();
         }
     }
-    */
+
 }

@@ -56,7 +56,6 @@ public class UnitActionSystemUI : MonoBehaviour
     }
     private void UnitActionSystem_OnSelectedActionChanged(object sender, EventArgs e)
     {
-        UpdateActionPoints();
         UpdateSelectedVisual();
     }
     private void UnitActionSystem_OnActionStarted(object sender, EventArgs e)

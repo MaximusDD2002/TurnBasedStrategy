@@ -8,7 +8,6 @@ public class GridObject
     private GridSystem<GridObject> gridSystem;
     private GridPosition gridPosition;
     private List<Unit> unitList;
-
     public GridObject(GridSystem<GridObject> gridSystem, GridPosition gridPosition)
     {
         this.gridSystem = gridSystem;
@@ -19,6 +18,7 @@ public class GridObject
     public override string ToString()
     {
         string unitString = "";
+
         foreach (Unit unit in unitList)
         {
             unitString += unit + "\n";
@@ -30,6 +30,7 @@ public class GridObject
     {
         unitList.Add(unit);
     }
+
 
     public void RemoveUnit(Unit unit)
     {

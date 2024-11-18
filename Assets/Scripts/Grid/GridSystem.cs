@@ -9,6 +9,7 @@ public class GridSystem<TGridObject>
     private int height;
     private float cellSize;
     private TGridObject[,] gridObjectArray;
+    [SerializeField] private LayerMask obstaclesLayerMask;
 
     public GridSystem(int width, int height, float cellSize, Func<GridSystem<TGridObject>, GridPosition,TGridObject> createGridObject)
     {
@@ -23,7 +24,13 @@ public class GridSystem<TGridObject>
             for (int z = 0; z < height; z++)
             {
                 GridPosition gridPosition = new GridPosition(x, z);
-                gridObjectArray[x,z] = createGridObject(this, gridPosition);
+                 gridObjectArray[x,z] = createGridObject(this, gridPosition);
+                // Vector3 worldPosition = GetWorldPosition(gridPosition);
+                // float raycastOffsetDistance = 5f;
+                // Physics.Raycast(worldPosition + Vector3.down * raycastOffsetDistance,
+                //             Vector3.up,
+                //             raycastOffsetDistance * 2,
+                //             obstaclesLayerMask);
             }
         }
     }
@@ -51,7 +58,7 @@ public class GridSystem<TGridObject>
                 GridPosition gridPosition = new GridPosition(x,z);
                 Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity);
                 GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
-                gridDebugObject.SetGridObject(GetGridObject(gridPosition) as GridObject);
+                gridDebugObject.SetGridObject(GetGridObject(gridPosition));
             }
         }
     }
