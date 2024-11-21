@@ -155,8 +155,10 @@ public class AttackAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
+        Debug.Log(onActionComplete);
         ActionStart(onActionComplete);
 
+        Debug.Log(onActionComplete);
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
         state = State.Aiming;
@@ -164,6 +166,9 @@ public class AttackAction : BaseAction
         stateTimer = aimingStateTime;
 
         canSlash = true;
+
+        
+        Debug.Log(onActionComplete);
     }
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
